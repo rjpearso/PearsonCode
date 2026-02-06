@@ -1,6 +1,6 @@
 # Classroom Jeopardy Game
 
-A Jeopardy-style review game built with Python/Pygame for classroom use.
+A Jeopardy-style review game built with Python/Tkinter for classroom use. **No installs needed** - uses only Python's built-in libraries.
 
 ## Features
 
@@ -16,15 +16,14 @@ A Jeopardy-style review game built with Python/Pygame for classroom use.
 ## Quick Start
 
 ```bash
-# Install pygame
-pip install pygame
-
-# Generate sound effects (first time only)
-python3 generate_sounds.py
+# Generate sound effects (first time only, for thinking music + sound effects)
+python generate_sounds.py
 
 # Run the game
-python3 jeopardy.py
+python jeopardy.py
 ```
+
+No `pip install` needed! Everything uses Python's built-in tkinter and winsound (Windows).
 
 ## CSV Question Format
 
