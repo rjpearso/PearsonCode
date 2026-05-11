@@ -1,0 +1,16 @@
+# SDR Contest Frequency Helper – dependencies
+# Install with: pip install -r requirements_sdr.txt
+
+# Web requests for DX cluster APIs
+requests>=2.28.0
+
+# Numerical processing (FFT, peak detection)
+numpy>=1.23.0
+
+# Spectrum waterfall display (embedded in tkinter)
+matplotlib>=3.6.0
+
+# RTL-SDR hardware interface
+# Comment this out if you don't have a physical RTL-SDR dongle yet;
+# the app will run in simulation mode without it.
+pyrtlsdr>=0.3.0
