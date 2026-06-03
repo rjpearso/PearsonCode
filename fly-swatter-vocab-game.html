@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fly Swatter Vocabulary Game</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#1a1a2e;color:#fff;height:100vh;overflow:hidden;}
+
+/* ===== SETUP ===== */
+#setup-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:20px;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);}
+.setup-title{font-size:clamp(1.8em,4vw,3em);font-weight:bold;color:#e94560;text-shadow:0 0 20px rgba(233,69,96,.5);margin-bottom:6px;text-align:center;}
+.setup-subtitle{font-size:clamp(.9em,2vw,1.2em);color:#a8b2d8;margin-bottom:24px;text-align:center;}
+.setup-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;width:100%;max-width:580px;backdrop-filter:blur(10px);}
+.setup-label{display:block;font-size:.9em;color:#a8b2d8;margin-bottom:7px;font-weight:600;}
+.setup-section{margin-bottom:18px;}
+.setup-divider{text-align:center;color:#a8b2d8;margin:12px 0;font-size:.85em;position:relative;}
+.setup-divider::before,.setup-divider::after{content:'';position:absolute;top:50%;width:44%;height:1px;background:rgba(255,255,255,.2);}
+.setup-divider::before{left:0;}.setup-divider::after{right:0;}
+.file-upload-area{border:2px dashed rgba(233,69,96,.5);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+.file-upload-area:hover{border-color:#e94560;background:rgba(233,69,96,.1);}
+.file-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.file-upload-icon{font-size:1.8em;margin-bottom:6px;}
+.file-upload-text{color:#a8b2d8;font-size:.85em;}
+#file-name{color:#e94560;font-weight:bold;font-size:.85em;margin-top:4px;min-height:18px;}
+textarea#word-paste{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;padding:10px;font-size:.9em;resize:vertical;min-height:110px;outline:none;transition:border-color .3s;font-family:inherit;}
+textarea#word-paste:focus{border-color:#e94560;}
+textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
+#word-count-display{font-size:.82em;color:#a8b2d8;margin-bottom:10px;min-height:18px;text-align:center;}
+.setup-footer{text-align:center;}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;transition:all .2s;gap:6px;font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,#e94560,#c23152);color:#fff;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(233,69,96,.4);}
+.btn-secondary{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.btn-secondary:hover{background:rgba(255,255,255,.2);}
+.btn-success{background:linear-gradient(135deg,#27ae60,#1e8449);color:#fff;}
+.btn-success:hover{transform:translateY(-1px);}
+.btn-danger{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;}
+.btn-danger:hover{transform:translateY(-1px);}
+.btn-warning{background:linear-gradient(135deg,#f39c12,#d68910);color:#fff;}
+.btn-warning:hover{transform:translateY(-1px);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
+.btn-sm{padding:5px 12px;font-size:.78em;}
+
+/* ===== GAME SCREEN ===== */
+#game-screen{display:none;flex-direction:column;height:100vh;background:#1a1a2e;}
+.game-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;}
+.score-panel{display:flex;flex-direction:column;align-items:center;min-width:110px;padding:4px 10px;border-radius:10px;transition:background .3s;}
+.score-panel.active-turn{background:rgba(255,255,255,.12);box-shadow:0 0 15px rgba(255,255,255,.15);}
+.score-player-name{font-size:.75em;color:#a8b2d8;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.score-value{font-size:2.4em;font-weight:bold;line-height:1.1;}
+.p1-color{color:#3498db;}.p2-color{color:#e74c3c;}
+.game-controls{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.game-title{font-size:1em;font-weight:bold;color:#e94560;}
+.words-remaining{font-size:.75em;color:#a8b2d8;}
+.game-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+
+/* ===== WORD GRID ===== */
+#word-grid-container{flex:1;display:flex;align-items:stretch;justify-content:center;padding:10px;overflow:hidden;position:relative;}
+#word-grid{display:grid;gap:8px;width:100%;align-content:stretch;}
+.word-cell{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16213e,#0f3460);border:2px solid rgba(255,255,255,.15);border-radius:10px;cursor:pointer;transition:all .15s;padding:8px 6px;text-align:center;word-break:break-word;user-select:none;font-weight:700;color:#fff;line-height:1.2;}
+.word-cell:hover{background:linear-gradient(135deg,#e94560,#c23152);border-color:#e94560;transform:scale(1.04);box-shadow:0 4px 20px rgba(233,69,96,.4);}
+.word-cell:active{transform:scale(.97);}
+
+/* ===== COUNTDOWN OVERLAY ===== */
+#countdown-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.88);flex-direction:column;align-items:center;justify-content:center;z-index:10;border-radius:4px;}
+.countdown-player-label{font-size:1.3em;color:#a8b2d8;margin-bottom:8px;font-weight:600;}
+.countdown-msg{font-size:clamp(1em,2.5vw,1.6em);color:#fff;margin-bottom:16px;text-align:center;padding:0 20px;}
+.countdown-num{font-size:clamp(5em,15vw,9em);font-weight:bold;color:#e94560;text-shadow:0 0 40px rgba(233,69,96,.8);line-height:1;}
+
+/* ===== TIMER BAR ===== */
+#timer-bar-wrap{position:absolute;bottom:0;left:0;right:0;height:7px;background:rgba(255,255,255,.08);display:none;}
+#timer-bar{height:100%;background:linear-gradient(90deg,#27ae60,#f39c12 60%,#e74c3c);width:100%;transform-origin:left;}
+#selecting-msg{display:none;position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);padding:5px 16px;border-radius:20px;font-size:.88em;color:#fff;white-space:nowrap;z-index:5;pointer-events:none;border:1px solid rgba(255,255,255,.15);}
+
+/* ===== MODALS ===== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#16213e;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:26px;width:92%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:mIn .2s ease;}
+@keyframes mIn{from{opacity:0;transform:scale(.9) translateY(-15px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-title{font-size:1.3em;font-weight:bold;margin-bottom:8px;color:#e94560;}
+.modal-word-display{font-size:clamp(1.4em,4vw,2.2em);font-weight:bold;text-align:center;padding:12px;background:rgba(255,255,255,.05);border-radius:10px;margin:12px 0;color:#fff;word-break:break-word;}
+.modal-q{font-size:.9em;color:#a8b2d8;margin-bottom:10px;}
+.player-row{display:flex;gap:10px;margin-bottom:14px;}
+.player-pick-btn{flex:1;padding:11px;border:2px solid transparent;border-radius:8px;cursor:pointer;font-size:.9em;font-weight:700;transition:all .2s;background:rgba(255,255,255,.05);color:#fff;font-family:inherit;}
+.player-pick-btn.p1{border-color:rgba(52,152,219,.35);}
+.player-pick-btn.p1:hover,.player-pick-btn.p1.sel{background:rgba(52,152,219,.3);border-color:#3498db;}
+.player-pick-btn.p2{border-color:rgba(231,76,60,.35);}
+.player-pick-btn.p2:hover,.player-pick-btn.p2.sel{background:rgba(231,76,60,.3);border-color:#e74c3c;}
+.player-pick-btn:disabled{opacity:.3;cursor:not-allowed;}
+.modal-row{display:flex;gap:10px;margin-top:10px;}
+.modal-row .btn{flex:1;}
+.modal-err{color:#e94560;font-size:.82em;text-align:center;min-height:18px;margin-top:5px;}
+
+/* ===== TEMP MSG ===== */
+#temp-msg{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,10,30,.92);color:#fff;font-size:clamp(1em,3vw,1.4em);font-weight:bold;padding:18px 36px;border-radius:14px;z-index:200;text-align:center;pointer-events:none;border:2px solid rgba(233,69,96,.5);max-width:80vw;}
+
+/* ===== END SCREEN ===== */
+#end-screen{display:none;position:fixed;inset:0;z-index:300;background:#1a1a2e;flex-direction:column;align-items:center;justify-content:center;}
+#fireworks-canvas{position:fixed;inset:0;pointer-events:none;z-index:301;}
+.end-content{position:relative;z-index:302;text-align:center;animation:endIn .6s ease;}
+@keyframes endIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+.end-trophy{font-size:clamp(3em,10vw,5em);margin-bottom:8px;}
+.end-winner{font-size:clamp(1.8em,5vw,3em);font-weight:bold;margin-bottom:8px;}
+.end-score-row{display:flex;justify-content:center;gap:50px;margin:20px 0;}
+.end-score-item{text-align:center;}
+.end-score-name{font-size:.85em;color:#a8b2d8;text-transform:uppercase;letter-spacing:1px;}
+.end-score-val{font-size:clamp(2em,7vw,3.5em);font-weight:bold;}
+
+/* ===== KEYBOARD HINT ===== */
+#kb-hint{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:5px 14px;border-radius:20px;font-size:.75em;color:#a8b2d8;pointer-events:none;z-index:10;}
+kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size:.9em;font-family:monospace;}
+</style>
+</head>
+<body>
+
+<!-- ==================== SETUP SCREEN ==================== -->
+<div id="setup-screen">
+  <div class="setup-title">🪰 Fly Swatter Vocab Game</div>
+  <div class="setup-subtitle">Upload or paste your vocabulary words to begin</div>
+  <div class="setup-card">
+    <div class="setup-section">
+      <label class="setup-label">📂 Upload a text file (one word or phrase per line)</label>
+      <div class="file-upload-area">
+        <input type="file" id="file-input" accept=".txt,.csv">
+        <div class="file-upload-icon">📄</div>
+        <div class="file-upload-text">Click to browse or drag &amp; drop a .txt file</div>
+        <div id="file-name"></div>
+      </div>
+    </div>
+    <div class="setup-divider">— OR —</div>
+    <div class="setup-section">
+      <label class="setup-label">✏️ Paste or type your words below</label>
+      <textarea id="word-paste" placeholder="Enter words separated by new lines, commas, or semicolons&#10;&#10;Example:&#10;photosynthesis&#10;mitochondria&#10;cell membrane&#10;nucleus"></textarea>
+    </div>
+    <div id="word-count-display"></div>
+    <div class="setup-footer">
+      <button class="btn btn-primary" id="next-btn" onclick="startGame()" disabled style="font-size:1.1em;padding:13px 40px;">
+        Next ▶
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GAME SCREEN ==================== -->
+<div id="game-screen">
+  <div class="game-header">
+    <div class="score-panel" id="p1-panel">
+      <div class="score-player-name p1-color">Player 1 <kbd style="font-size:.65em;background:rgba(52,152,219,.25);border-radius:3px;padding:1px 4px;">Tab</kbd></div>
+      <div class="score-value p1-color" id="score-p1">0</div>
+    </div>
+    <div class="game-controls">
+      <div class="game-title">🪰 Fly Swatter</div>
+      <div class="words-remaining" id="words-remaining"></div>
+      <div class="game-buttons">
+        <button class="btn btn-secondary btn-sm" id="undo-btn" onclick="triggerUndo()">↩ Undo</button>
+        <button class="btn btn-warning btn-sm" onclick="triggerRestart()">↺ Restart</button>
+        <button class="btn btn-danger btn-sm" onclick="triggerEndGame()">✖ End</button>
+      </div>
+    </div>
+    <div class="score-panel" id="p2-panel">
+      <div class="score-player-name p2-color">Player 2 <kbd style="font-size:.65em;background:rgba(231,76,60,.25);border-radius:3px;padding:1px 4px;">Enter</kbd></div>
+      <div class="score-value p2-color" id="score-p2">0</div>
+    </div>
+  </div>
+
+  <div id="word-grid-container">
+    <div id="word-grid"></div>
+    <!-- countdown overlay -->
+    <div id="countdown-overlay">
+      <div class="countdown-player-label" id="cd-player"></div>
+      <div class="countdown-msg" id="cd-msg">Get ready to select your word...</div>
+      <div class="countdown-num" id="cd-num">3</div>
+    </div>
+    <!-- selecting message -->
+    <div id="selecting-msg"></div>
+    <!-- timer bar -->
+    <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
+  </div>
+</div>
+
+<!-- ==================== CLICK CONFIRM MODAL ==================== -->
+<div class="modal-overlay" id="click-modal">
+  <div class="modal">
+    <div class="modal-title">Word Selected!</div>
+    <div class="modal-word-display" id="cm-word"></div>
+    <div class="modal-q">Which player answered?</div>
+    <div class="player-row">
+      <button class="player-pick-btn p1" id="cm-p1" onclick="cmSelectPlayer(1)">🔵 Player 1</button>
+      <button class="player-pick-btn p2" id="cm-p2" onclick="cmSelectPlayer(2)">🔴 Player 2</button>
+    </div>
+    <div class="modal-q">Was the answer correct?</div>
+    <div id="cm-err" class="modal-err"></div>
+    <div class="modal-row">
+      <button class="btn btn-success" onclick="cmConfirm(true)">✓ Correct</button>
+      <button class="btn btn-danger" onclick="cmConfirm(false)">✗ Wrong</button>
+    </div>
+    <div class="modal-row">
+      <button class="btn btn-secondary" onclick="cmCancel()">↩ Undo / Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== KEYBOARD CONFIRM MODAL ==================== -->
+<div class="modal-overlay" id="kb-modal">
+  <div class="modal">
+    <div class="modal-title" id="km-title"></div>
+    <div class="modal-word-display" id="km-word"></div>
+    <div class="modal-q">Was this the correct answer?</div>
+    <div class="modal-row">
+      <button class="btn btn-success" onclick="kmConfirm(true)">✓ Correct</button>
+      <button class="btn btn-danger" onclick="kmConfirm(false)">✗ Wrong</button>
+    </div>
+    <div class="modal-row">
+      <button class="btn btn-secondary" onclick="kmCancel()">↩ Undo / Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GENERIC CONFIRM MODAL ==================== -->
+<div class="modal-overlay" id="gen-modal">
+  <div class="modal">
+    <div class="modal-title" id="gm-title"></div>
+    <div class="modal-q" id="gm-msg" style="font-size:1em;color:#fff;margin-bottom:4px;"></div>
+    <div class="modal-row" style="margin-top:20px;">
+      <button class="btn btn-danger" onclick="gmConfirm()">Yes, Confirm</button>
+      <button class="btn btn-secondary" onclick="gmCancel()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TEMP MESSAGE ==================== -->
+<div id="temp-msg"></div>
+
+<!-- ==================== END SCREEN ==================== -->
+<div id="end-screen">
+  <canvas id="fireworks-canvas"></canvas>
+  <div class="end-content">
+    <div class="end-trophy" id="end-trophy">🏆</div>
+    <div class="end-winner" id="end-winner"></div>
+    <div class="end-score-row">
+      <div class="end-score-item">
+        <div class="end-score-name p1-color">Player 1</div>
+        <div class="end-score-val p1-color" id="end-s1">0</div>
+      </div>
+      <div class="end-score-item">
+        <div class="end-score-name p2-color">Player 2</div>
+        <div class="end-score-val p2-color" id="end-s2">0</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="font-size:1.1em;padding:14px 40px;" onclick="playAgain()">🔄 Play Again</button>
+  </div>
+</div>
+
+<!-- KEYBOARD HINT -->
+<div id="kb-hint" style="display:none;"><kbd>Tab</kbd> = Player 1 buzz in &nbsp;|&nbsp; <kbd>Enter</kbd> = Player 2 buzz in</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const G = {
+  allWords: [],
+  active: [],
+  scores: [0, 0],
+  history: [],          // [{player,word}]
+  mode: 'setup',        // setup|idle|buzzin|selecting|confirm|endgame
+  buzzedPlayer: 0,
+  activeSelector: 0,    // who is currently selecting (keyboard mode)
+  wrongPlayer: 0,       // click mode: who answered wrong this round
+  isSecondChance: false,// keyboard mode: other player's turn
+  selWord: null,        // word chosen
+  cmPlayer: 0,          // selected player in click modal
+  cdTimer: null,        // countdown interval
+  selTimer: null,       // selection timeout
+  timerStart: 0,
+  timerDur: 0,
+  timerRAF: null,
+  gmCallback: null,
+  fwRAF: null,
+  fwParticles: [],
+  fwFrame: 0,
+  tempTimer: null,
+};
+
+// ============================================================
+// SETUP
+// ============================================================
+document.getElementById('word-paste').addEventListener('input', updateWordCount);
+document.getElementById('file-input').addEventListener('change', function(e){
+  const f = e.target.files[0]; if(!f) return;
+  document.getElementById('file-name').textContent = '📄 ' + f.name;
+  const r = new FileReader();
+  r.onload = ev => {
+    document.getElementById('word-paste').value = ev.target.result;
+    updateWordCount();
+  };
+  r.readAsText(f);
+});
+
+function updateWordCount(){
+  const w = parseWords(document.getElementById('word-paste').value);
+  const el = document.getElementById('word-count-display');
+  const btn = document.getElementById('next-btn');
+  if(w.length > 0){
+    el.textContent = `✓ ${w.length} word${w.length!==1?'s':''} found`;
+    el.style.color = '#6bcb77';
+    btn.disabled = false;
+  } else {
+    el.textContent = '';
+    btn.disabled = true;
+  }
+}
+
+function parseWords(text){
+  return [...new Set(
+    text.split(/[\n,;|]+/).map(s=>s.trim()).filter(s=>s.length>0)
+  )];
+}
+
+function startGame(){
+  const words = parseWords(document.getElementById('word-paste').value);
+  if(!words.length){ alert('Please enter at least one word!'); return; }
+  G.allWords = words;
+  G.active = [...words];
+  G.scores = [0,0];
+  G.history = [];
+  G.mode = 'idle';
+  G.wrongPlayer = 0;
+  G.selWord = null;
+  document.getElementById('setup-screen').style.display = 'none';
+  const gs = document.getElementById('game-screen');
+  gs.style.display = 'flex';
+  document.getElementById('kb-hint').style.display = 'block';
+  renderGrid();
+  refreshScores();
+  refreshRemaining();
+}
+
+// ============================================================
+// GRID
+// ============================================================
+function renderGrid(){
+  const grid = document.getElementById('word-grid');
+  grid.innerHTML = '';
+  G.active.forEach(word => {
+    const c = document.createElement('div');
+    c.className = 'word-cell';
+    c.textContent = word;
+    c.dataset.word = word;
+    c.addEventListener('click', ()=> onWordClick(word));
+    grid.appendChild(c);
+  });
+  sizeGrid();
+}
+
+function sizeGrid(){
+  const cont = document.getElementById('word-grid-container');
+  const grid = document.getElementById('word-grid');
+  const n = G.active.length;
+  if(!n) return;
+
+  const W = cont.clientWidth - 20;
+  const H = cont.clientHeight - 20;
+
+  // Find optimal column count by maximizing cell area
+  let bestCols = 1, bestArea = 0;
+  for(let cols = 1; cols <= n; cols++){
+    const rows = Math.ceil(n/cols);
+    const cw = (W - (cols-1)*8) / cols;
+    const ch = (H - (rows-1)*8) / rows;
+    const area = cw * ch;
+    if(area > bestArea){ bestArea = area; bestCols = cols; }
+  }
+
+  const cols = bestCols;
+  const rows = Math.ceil(n/cols);
+  grid.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+  grid.style.gridAutoRows = `${Math.floor((H-(rows-1)*8)/rows)}px`;
+
+  requestAnimationFrame(()=>{
+    const cw = (W-(cols-1)*8)/cols;
+    const ch = (H-(rows-1)*8)/rows;
+    const maxLen = Math.max(...G.active.map(w=>w.length), 1);
+    const fsByW = (cw * 0.85) / (maxLen * 0.56);
+    const fsByH = ch * 0.48;
+    let fs = Math.min(fsByW, fsByH);
+    fs = Math.max(11, Math.min(fs, 56));
+    grid.style.fontSize = Math.round(fs) + 'px';
+  });
+}
+
+function refreshScores(){
+  document.getElementById('score-p1').textContent = G.scores[0];
+  document.getElementById('score-p2').textContent = G.scores[1];
+}
+
+function refreshRemaining(){
+  const n = G.active.length;
+  document.getElementById('words-remaining').textContent =
+    `${n} word${n!==1?'s':''} remaining`;
+}
+
+// ============================================================
+// WORD CLICK
+// ============================================================
+function onWordClick(word){
+  if(G.mode === 'idle'){
+    G.selWord = word;
+    openClickModal(word);
+  } else if(G.mode === 'selecting'){
+    clearTimeout(G.selTimer); G.selTimer = null;
+    stopTimerBar();
+    document.getElementById('selecting-msg').style.display = 'none';
+    G.selWord = word;
+    openKbModal(word, G.activeSelector);
+  }
+}
+
+// ============================================================
+// CLICK MODE MODAL
+// ============================================================
+function openClickModal(word){
+  G.mode = 'confirm';
+  G.cmPlayer = 0;
+  document.getElementById('cm-word').textContent = word;
+  document.getElementById('cm-err').textContent = '';
+  const p1b = document.getElementById('cm-p1');
+  const p2b = document.getElementById('cm-p2');
+  p1b.classList.remove('sel'); p2b.classList.remove('sel');
+  // If wrongPlayer set, disable that player's button
+  p1b.disabled = G.wrongPlayer === 1;
+  p2b.disabled = G.wrongPlayer === 2;
+  document.getElementById('click-modal').classList.add('open');
+}
+
+function cmSelectPlayer(p){
+  G.cmPlayer = p;
+  document.getElementById('cm-p1').classList.toggle('sel', p===1);
+  document.getElementById('cm-p2').classList.toggle('sel', p===2);
+  document.getElementById('cm-err').textContent = '';
+}
+
+function cmConfirm(correct){
+  if(!G.cmPlayer){
+    document.getElementById('cm-err').textContent = '⚠ Please select a player first!';
+    return;
+  }
+  document.getElementById('click-modal').classList.remove('open');
+
+  if(correct){
+    awardPoint(G.cmPlayer);
+    G.wrongPlayer = 0;
+    G.mode = 'idle';
+  } else {
+    const loser = G.cmPlayer;
+    if(G.wrongPlayer === 0){
+      G.wrongPlayer = loser;
+      G.mode = 'idle';
+      const other = loser === 1 ? 2 : 1;
+      showTemp(`Player ${loser} was wrong! Player ${other} can now pick.`);
+    } else {
+      // Both players wrong — reset
+      G.wrongPlayer = 0;
+      G.mode = 'idle';
+      showTemp('Both players were wrong!');
+    }
+  }
+}
+
+function cmCancel(){
+  document.getElementById('click-modal').classList.remove('open');
+  G.mode = 'idle';
+  G.selWord = null;
+}
+
+// ============================================================
+// KEYBOARD MODE MODAL
+// ============================================================
+function openKbModal(word, player){
+  G.mode = 'confirm';
+  document.getElementById('km-title').textContent = `Player ${player}'s Answer`;
+  document.getElementById('km-word').textContent = word;
+  document.getElementById('kb-modal').classList.add('open');
+}
+
+function kmConfirm(correct){
+  document.getElementById('kb-modal').classList.remove('open');
+  const player = G.activeSelector;
+
+  if(correct){
+    awardPoint(player);
+    resetKbRound();
+    G.mode = 'idle';
+  } else {
+    if(!G.isSecondChance){
+      G.isSecondChance = true;
+      const other = player === 1 ? 2 : 1;
+      G.mode = 'idle';
+      showTemp(`Player ${player} was wrong! Player ${other} — your turn!`);
+      setTimeout(()=> launchSelectPhase(other), 1400);
+    } else {
+      showTemp('Both players were wrong! Moving on...');
+      resetKbRound();
+      G.mode = 'idle';
+    }
+  }
+}
+
+function kmCancel(){
+  document.getElementById('kb-modal').classList.remove('open');
+  stopTimerBar();
+  document.getElementById('selecting-msg').style.display = 'none';
+  resetKbRound();
+  G.mode = 'idle';
+}
+
+function resetKbRound(){
+  G.buzzedPlayer = 0;
+  G.activeSelector = 0;
+  G.isSecondChance = false;
+  if(G.cdTimer){ clearInterval(G.cdTimer); G.cdTimer=null; }
+  clearTimeout(G.selTimer); G.selTimer = null;
+}
+
+// ============================================================
+// AWARD POINT / UNDO
+// ============================================================
+function awardPoint(player){
+  G.scores[player-1]++;
+  G.history.push({player, word: G.selWord});
+  const idx = G.active.indexOf(G.selWord);
+  if(idx !== -1) G.active.splice(idx,1);
+  refreshScores();
+  refreshRemaining();
+  // Flash score panel
+  const panel = document.getElementById(player===1?'p1-panel':'p2-panel');
+  panel.classList.add('active-turn');
+  setTimeout(()=> panel.classList.remove('active-turn'), 800);
+  if(G.active.length === 0){ setTimeout(endGame, 600); return; }
+  renderGrid();
+}
+
+function doUndo(){
+  if(!G.history.length) return;
+  const last = G.history.pop();
+  G.scores[last.player-1]--;
+  G.active.push(last.word);
+  refreshScores();
+  refreshRemaining();
+  renderGrid();
+  showTemp(`Undid point for Player ${last.player} (${last.word})`);
+}
+
+// ============================================================
+// KEYBOARD INPUT
+// ============================================================
+document.addEventListener('keydown', e=>{
+  // Always prevent Tab from focusing other elements during game
+  if(G.mode !== 'setup' && G.mode !== 'endgame' && e.key === 'Tab'){
+    e.preventDefault();
+  }
+  // Only buzz in from idle mode
+  if(G.mode !== 'idle') return;
+  const player = e.key === 'Tab' ? 1 : e.key === 'Enter' ? 2 : 0;
+  if(!player) return;
+  e.preventDefault();
+  buzzIn(player);
+});
+
+function buzzIn(player){
+  G.buzzedPlayer = player;
+  G.isSecondChance = false;
+  G.mode = 'buzzin';
+  // Hide words
+  document.getElementById('word-grid').style.visibility = 'hidden';
+  startCountdown(player, 3, ()=>{
+    document.getElementById('word-grid').style.visibility = 'visible';
+    launchSelectPhase(player);
+  });
+}
+
+// ============================================================
+// COUNTDOWN
+// ============================================================
+function startCountdown(player, secs, cb){
+  const ov = document.getElementById('countdown-overlay');
+  ov.style.display = 'flex';
+  document.getElementById('cd-player').textContent =
+    `Player ${player} (${player===1?'Tab':'Enter'}) buzzed in!`;
+  document.getElementById('cd-msg').textContent = 'Get ready to select your word...';
+  let rem = secs;
+  document.getElementById('cd-num').textContent = rem;
+
+  G.cdTimer = setInterval(()=>{
+    rem--;
+    if(rem <= 0){
+      clearInterval(G.cdTimer); G.cdTimer = null;
+      ov.style.display = 'none';
+      cb();
+    } else {
+      document.getElementById('cd-num').textContent = rem;
+    }
+  }, 1000);
+}
+
+// ============================================================
+// SELECTION PHASE
+// ============================================================
+function launchSelectPhase(player){
+  G.mode = 'selecting';
+  G.activeSelector = player;
+  const msg = document.getElementById('selecting-msg');
+  msg.textContent = `⚡ Player ${player} — Select your word!`;
+  msg.style.display = 'block';
+  startTimerBar(4000);
+
+  G.selTimer = setTimeout(()=>{
+    stopTimerBar();
+    msg.style.display = 'none';
+    G.mode = 'idle';
+    if(!G.isSecondChance){
+      const other = player===1?2:1;
+      G.isSecondChance = true;
+      showTemp(`Player ${player} timed out! Player ${other} — your turn!`);
+      setTimeout(()=> launchSelectPhase(other), 1400);
+    } else {
+      showTemp("Time's up for both players!");
+      resetKbRound();
+    }
+  }, 4000);
+}
+
+// ============================================================
+// TIMER BAR
+// ============================================================
+function startTimerBar(dur){
+  const wrap = document.getElementById('timer-bar-wrap');
+  const bar = document.getElementById('timer-bar');
+  wrap.style.display = 'block';
+  bar.style.transition = 'none';
+  bar.style.width = '100%';
+  G.timerStart = performance.now();
+  G.timerDur = dur;
+  const tick = now => {
+    const pct = Math.max(0, 100 - ((now - G.timerStart)/G.timerDur)*100);
+    bar.style.width = pct + '%';
+    if(pct > 0 && G.mode === 'selecting') G.timerRAF = requestAnimationFrame(tick);
+  };
+  G.timerRAF = requestAnimationFrame(tick);
+}
+
+function stopTimerBar(){
+  if(G.timerRAF){ cancelAnimationFrame(G.timerRAF); G.timerRAF=null; }
+  document.getElementById('timer-bar-wrap').style.display = 'none';
+}
+
+// ============================================================
+// TEMP MESSAGE
+// ============================================================
+function showTemp(msg, dur=1600){
+  const el = document.getElementById('temp-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+  if(G.tempTimer) clearTimeout(G.tempTimer);
+  G.tempTimer = setTimeout(()=>{ el.style.display='none'; }, dur);
+}
+
+// ============================================================
+// UNDO / RESTART / END TRIGGERS
+// ============================================================
+function triggerUndo(){
+  if(G.mode !== 'idle') return;
+  if(!G.history.length){ showTemp('Nothing to undo!'); return; }
+  const last = G.history[G.history.length-1];
+  openGenericModal(
+    '↩ Undo Last Point',
+    `Remove point from Player ${last.player} for "${last.word}"?`,
+    doUndo
+  );
+}
+
+function triggerRestart(){
+  if(G.mode !== 'idle') return;
+  openGenericModal(
+    '↺ Restart Game',
+    'Reset all scores and start over with the same words?',
+    ()=>{
+      G.active = [...G.allWords];
+      G.scores = [0,0];
+      G.history = [];
+      G.wrongPlayer = 0;
+      G.mode = 'idle';
+      renderGrid();
+      refreshScores();
+      refreshRemaining();
+      showTemp('Game restarted!');
+    }
+  );
+}
+
+function triggerEndGame(){
+  openGenericModal(
+    '✖ End Game',
+    'Are you sure you want to end the game now?',
+    endGame
+  );
+}
+
+// ============================================================
+// GENERIC MODAL
+// ============================================================
+function openGenericModal(title, msg, cb){
+  G.gmCallback = cb;
+  document.getElementById('gm-title').textContent = title;
+  document.getElementById('gm-msg').textContent = msg;
+  document.getElementById('gen-modal').classList.add('open');
+}
+function gmConfirm(){
+  document.getElementById('gen-modal').classList.remove('open');
+  if(G.gmCallback){ G.gmCallback(); G.gmCallback=null; }
+}
+function gmCancel(){
+  document.getElementById('gen-modal').classList.remove('open');
+  G.gmCallback = null;
+}
+
+// ============================================================
+// END GAME
+// ============================================================
+function endGame(){
+  G.mode = 'endgame';
+  // Clean up any active timers
+  if(G.cdTimer){ clearInterval(G.cdTimer); G.cdTimer=null; }
+  clearTimeout(G.selTimer); G.selTimer=null;
+  stopTimerBar();
+  document.getElementById('countdown-overlay').style.display = 'none';
+  document.getElementById('selecting-msg').style.display = 'none';
+  document.getElementById('kb-hint').style.display = 'none';
+
+  const [s1,s2] = G.scores;
+  let winText, winColor, trophy;
+  if(s1 > s2){ winText=`🎉 Player 1 Wins!`; winColor='#3498db'; trophy='🏆'; }
+  else if(s2 > s1){ winText=`🎉 Player 2 Wins!`; winColor='#e74c3c'; trophy='🏆'; }
+  else { winText="🤝 It's a Tie!"; winColor='#f39c12'; trophy='🎖'; }
+
+  document.getElementById('end-trophy').textContent = trophy;
+  document.getElementById('end-winner').textContent = winText;
+  document.getElementById('end-winner').style.color = winColor;
+  document.getElementById('end-s1').textContent = s1;
+  document.getElementById('end-s2').textContent = s2;
+
+  document.getElementById('game-screen').style.display = 'none';
+  const es = document.getElementById('end-screen');
+  es.style.display = 'flex';
+  initFireworks();
+}
+
+function playAgain(){
+  stopFireworks();
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('word-paste').value = '';
+  document.getElementById('file-name').textContent = '';
+  document.getElementById('word-count-display').textContent = '';
+  document.getElementById('next-btn').disabled = true;
+  G.mode = 'setup';
+}
+
+// ============================================================
+// FIREWORKS
+// ============================================================
+function initFireworks(){
+  const cv = document.getElementById('fireworks-canvas');
+  cv.width = window.innerWidth;
+  cv.height = window.innerHeight;
+  G.fwParticles = [];
+  G.fwFrame = 0;
+  // Initial burst
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      fwExplode(cv,
+        cv.width*0.1 + Math.random()*cv.width*0.8,
+        cv.height*0.05 + Math.random()*cv.height*0.55
+      );
+    }, i*250);
+  }
+  G.fwRAF = requestAnimationFrame(fwDraw);
+}
+
+function stopFireworks(){
+  if(G.fwRAF){ cancelAnimationFrame(G.fwRAF); G.fwRAF=null; }
+  G.fwParticles=[];
+  const cv=document.getElementById('fireworks-canvas');
+  cv.getContext('2d').clearRect(0,0,cv.width,cv.height);
+}
+
+function fwExplode(cv,x,y){
+  const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b','#cc5de8','#20c997','#f06595','#74c0fc','#ffe066'];
+  const col = colors[Math.floor(Math.random()*colors.length)];
+  const col2 = colors[Math.floor(Math.random()*colors.length)];
+  for(let i=0;i<90;i++){
+    const angle=(i/90)*Math.PI*2 + (Math.random()-0.5)*0.4;
+    const spd=Math.random()*8+2;
+    G.fwParticles.push({
+      x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,
+      alpha:1,decay:Math.random()*0.016+0.009,
+      sz:Math.random()*3.5+1.5,
+      color:Math.random()<0.5?col:col2
+    });
+  }
+  // Sparks
+  for(let i=0;i<25;i++){
+    const angle=Math.random()*Math.PI*2;
+    const spd=Math.random()*14+4;
+    G.fwParticles.push({
+      x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,
+      alpha:1,decay:Math.random()*0.025+0.015,
+      sz:Math.random()*5+2,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      spark:true
+    });
+  }
+}
+
+function fwDraw(){
+  const cv=document.getElementById('fireworks-canvas');
+  const ctx=cv.getContext('2d');
+  ctx.fillStyle='rgba(26,26,46,0.17)';
+  ctx.fillRect(0,0,cv.width,cv.height);
+  G.fwFrame++;
+  if(G.fwFrame % 48 === 0){
+    fwExplode(cv,
+      cv.width*0.1+Math.random()*cv.width*0.8,
+      cv.height*0.05+Math.random()*cv.height*0.55
+    );
+  }
+  for(let i=G.fwParticles.length-1;i>=0;i--){
+    const p=G.fwParticles[i];
+    p.x+=p.vx; p.y+=p.vy;
+    p.vy+=0.13; p.vx*=0.985;
+    p.alpha-=p.decay;
+    if(p.alpha<=0){ G.fwParticles.splice(i,1); continue; }
+    ctx.save();
+    ctx.globalAlpha=p.alpha;
+    if(p.spark){
+      ctx.shadowColor=p.color; ctx.shadowBlur=8;
+    }
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+  G.fwRAF=requestAnimationFrame(fwDraw);
+}
+
+// ============================================================
+// RESIZE
+// ============================================================
+window.addEventListener('resize',()=>{
+  if(G.mode!=='setup'&&G.mode!=='endgame') sizeGrid();
+  if(G.mode==='endgame'){
+    const cv=document.getElementById('fireworks-canvas');
+    cv.width=window.innerWidth; cv.height=window.innerHeight;
+  }
+});
+</script>
+</body>
+</html>
