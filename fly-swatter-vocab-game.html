@@ -9,26 +9,43 @@
 body{font-family:'Segoe UI',Arial,sans-serif;background:#1a1a2e;color:#fff;height:100vh;overflow:hidden;}
 
 /* ===== SETUP ===== */
-#setup-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:20px;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);}
-.setup-title{font-size:clamp(1.8em,4vw,3em);font-weight:bold;color:#e94560;text-shadow:0 0 20px rgba(233,69,96,.5);margin-bottom:6px;text-align:center;}
-.setup-subtitle{font-size:clamp(.9em,2vw,1.2em);color:#a8b2d8;margin-bottom:24px;text-align:center;}
-.setup-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;width:100%;max-width:580px;backdrop-filter:blur(10px);}
-.setup-label{display:block;font-size:.9em;color:#a8b2d8;margin-bottom:7px;font-weight:600;}
-.setup-section{margin-bottom:18px;}
-.setup-divider{text-align:center;color:#a8b2d8;margin:12px 0;font-size:.85em;position:relative;}
+#setup-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:16px;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);overflow-y:auto;}
+.setup-title{font-size:clamp(1.6em,4vw,2.8em);font-weight:bold;color:#e94560;text-shadow:0 0 20px rgba(233,69,96,.5);margin-bottom:4px;text-align:center;flex-shrink:0;}
+.setup-subtitle{font-size:clamp(.85em,2vw,1.1em);color:#a8b2d8;margin-bottom:18px;text-align:center;flex-shrink:0;}
+.setup-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:22px;width:100%;max-width:580px;backdrop-filter:blur(10px);flex-shrink:0;}
+.setup-label{display:block;font-size:.88em;color:#a8b2d8;margin-bottom:6px;font-weight:600;}
+.setup-section{margin-bottom:16px;}
+.setup-divider{text-align:center;color:#a8b2d8;margin:10px 0;font-size:.82em;position:relative;}
 .setup-divider::before,.setup-divider::after{content:'';position:absolute;top:50%;width:44%;height:1px;background:rgba(255,255,255,.2);}
 .setup-divider::before{left:0;}.setup-divider::after{right:0;}
-.file-upload-area{border:2px dashed rgba(233,69,96,.5);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+.file-upload-area{border:2px dashed rgba(233,69,96,.5);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
 .file-upload-area:hover{border-color:#e94560;background:rgba(233,69,96,.1);}
 .file-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.file-upload-icon{font-size:1.8em;margin-bottom:6px;}
-.file-upload-text{color:#a8b2d8;font-size:.85em;}
-#file-name{color:#e94560;font-weight:bold;font-size:.85em;margin-top:4px;min-height:18px;}
-textarea#word-paste{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;padding:10px;font-size:.9em;resize:vertical;min-height:110px;outline:none;transition:border-color .3s;font-family:inherit;}
+.file-upload-icon{font-size:1.6em;margin-bottom:4px;}
+.file-upload-text{color:#a8b2d8;font-size:.82em;}
+#file-name{color:#e94560;font-weight:bold;font-size:.82em;margin-top:3px;min-height:16px;}
+textarea#word-paste{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;padding:10px;font-size:.88em;resize:vertical;min-height:100px;outline:none;transition:border-color .3s;font-family:inherit;}
 textarea#word-paste:focus{border-color:#e94560;}
 textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
-#word-count-display{font-size:.82em;color:#a8b2d8;margin-bottom:10px;min-height:18px;text-align:center;}
-.setup-footer{text-align:center;}
+#word-count-display{font-size:.8em;margin-bottom:8px;min-height:16px;text-align:center;}
+
+/* ===== TEAM SETUP ===== */
+.team-toggle-row{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.team-toggle-row input[type="checkbox"]{width:18px;height:18px;cursor:pointer;accent-color:#e94560;}
+#team-config{margin-top:14px;}
+.team-count-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+input.num-input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;padding:6px 10px;font-size:.9em;width:70px;text-align:center;outline:none;}
+input.num-input:focus{border-color:#e94560;}
+input[type="text"].txt-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;padding:7px 10px;font-size:.88em;width:100%;outline:none;font-family:inherit;}
+input[type="text"].txt-input:focus{border-color:#e94560;}
+input[type="text"].txt-input::placeholder{color:rgba(255,255,255,.3);}
+#team-inputs{display:flex;flex-direction:column;gap:10px;}
+.team-entry{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px;}
+.team-entry-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.team-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.team-entry-label{font-size:.82em;color:#a8b2d8;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.team-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.team-field-label{font-size:.78em;color:#a8b2d8;margin-bottom:3px;}
 
 /* ===== BUTTONS ===== */
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 24px;border:none;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;transition:all .2s;gap:6px;font-family:inherit;}
@@ -44,18 +61,21 @@ textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
 .btn-warning:hover{transform:translateY(-1px);}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
 .btn-sm{padding:5px 12px;font-size:.78em;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(233,69,96,.6);}50%{box-shadow:0 0 0 12px rgba(233,69,96,0);}}
+.btn-pulse{animation:pulse 1.3s infinite;}
 
 /* ===== GAME SCREEN ===== */
 #game-screen{display:none;flex-direction:column;height:100vh;background:#1a1a2e;}
 .game-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(0,0,0,.35);border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;}
-.score-panel{display:flex;flex-direction:column;align-items:center;min-width:110px;padding:4px 10px;border-radius:10px;transition:background .3s;}
+.score-panel{display:flex;flex-direction:column;align-items:center;min-width:120px;padding:4px 10px;border-radius:10px;transition:background .3s;}
 .score-panel.active-turn{background:rgba(255,255,255,.12);box-shadow:0 0 15px rgba(255,255,255,.15);}
-.score-player-name{font-size:.75em;color:#a8b2d8;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.score-player-name{font-size:.72em;color:#a8b2d8;font-weight:700;text-transform:uppercase;letter-spacing:.8px;text-align:center;}
+.score-student-label{font-size:.68em;color:rgba(255,255,255,.45);text-align:center;min-height:14px;margin-top:1px;}
 .score-value{font-size:2.4em;font-weight:bold;line-height:1.1;}
 .p1-color{color:#3498db;}.p2-color{color:#e74c3c;}
 .game-controls{display:flex;flex-direction:column;align-items:center;gap:5px;}
 .game-title{font-size:1em;font-weight:bold;color:#e94560;}
-.words-remaining{font-size:.75em;color:#a8b2d8;}
+.words-remaining{font-size:.72em;color:#a8b2d8;}
 .game-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
 
 /* ===== WORD GRID ===== */
@@ -68,7 +88,7 @@ textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
 /* ===== COUNTDOWN OVERLAY ===== */
 #countdown-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.88);flex-direction:column;align-items:center;justify-content:center;z-index:10;border-radius:4px;}
 .countdown-player-label{font-size:1.3em;color:#a8b2d8;margin-bottom:8px;font-weight:600;}
-.countdown-msg{font-size:clamp(1em,2.5vw,1.6em);color:#fff;margin-bottom:16px;text-align:center;padding:0 20px;}
+.countdown-msg{font-size:clamp(1em,2.5vw,1.5em);color:#fff;margin-bottom:16px;text-align:center;padding:0 20px;}
 .countdown-num{font-size:clamp(5em,15vw,9em);font-weight:bold;color:#e94560;text-shadow:0 0 40px rgba(233,69,96,.8);line-height:1;}
 
 /* ===== TIMER BAR ===== */
@@ -79,21 +99,43 @@ textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
 /* ===== MODALS ===== */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{background:#16213e;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:26px;width:92%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:mIn .2s ease;}
+.modal{background:#16213e;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:24px;width:92%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:mIn .2s ease;}
 @keyframes mIn{from{opacity:0;transform:scale(.9) translateY(-15px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .modal-title{font-size:1.3em;font-weight:bold;margin-bottom:8px;color:#e94560;}
 .modal-word-display{font-size:clamp(1.4em,4vw,2.2em);font-weight:bold;text-align:center;padding:12px;background:rgba(255,255,255,.05);border-radius:10px;margin:12px 0;color:#fff;word-break:break-word;}
-.modal-q{font-size:.9em;color:#a8b2d8;margin-bottom:10px;}
-.player-row{display:flex;gap:10px;margin-bottom:14px;}
-.player-pick-btn{flex:1;padding:11px;border:2px solid transparent;border-radius:8px;cursor:pointer;font-size:.9em;font-weight:700;transition:all .2s;background:rgba(255,255,255,.05);color:#fff;font-family:inherit;}
+.modal-q{font-size:.88em;color:#a8b2d8;margin-bottom:10px;}
+.player-row{display:flex;gap:10px;margin-bottom:12px;}
+.player-pick-btn{flex:1;padding:11px;border:2px solid transparent;border-radius:8px;cursor:pointer;font-size:.88em;font-weight:700;transition:all .2s;background:rgba(255,255,255,.05);color:#fff;font-family:inherit;line-height:1.3;text-align:center;}
 .player-pick-btn.p1{border-color:rgba(52,152,219,.35);}
 .player-pick-btn.p1:hover,.player-pick-btn.p1.sel{background:rgba(52,152,219,.3);border-color:#3498db;}
 .player-pick-btn.p2{border-color:rgba(231,76,60,.35);}
 .player-pick-btn.p2:hover,.player-pick-btn.p2.sel{background:rgba(231,76,60,.3);border-color:#e74c3c;}
-.player-pick-btn:disabled{opacity:.3;cursor:not-allowed;}
+.player-pick-btn:disabled{opacity:.25;cursor:not-allowed;}
 .modal-row{display:flex;gap:10px;margin-top:10px;}
 .modal-row .btn{flex:1;}
-.modal-err{color:#e94560;font-size:.82em;text-align:center;min-height:18px;margin-top:5px;}
+.modal-err{color:#e94560;font-size:.8em;text-align:center;min-height:16px;margin-top:4px;}
+
+/* ===== ROUND ANNOUNCEMENT MODAL ===== */
+#round-modal .modal{max-width:520px;text-align:center;}
+.round-badge{display:inline-block;background:rgba(233,69,96,.2);border:1px solid rgba(233,69,96,.4);border-radius:20px;padding:4px 18px;font-size:.82em;color:#e94560;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px;}
+.round-matchup{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:22px;flex-wrap:wrap;}
+.round-player-card{background:rgba(255,255,255,.05);border-radius:12px;padding:16px 20px;min-width:160px;flex:1;max-width:200px;}
+.round-player-card.rpc-p1{border:2px solid rgba(52,152,219,.5);}
+.round-player-card.rpc-p2{border:2px solid rgba(231,76,60,.5);}
+.rpc-team{font-size:.8em;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.rpc-p1 .rpc-team{color:#3498db;}
+.rpc-p2 .rpc-team{color:#e74c3c;}
+.rpc-student{font-size:1.5em;font-weight:bold;color:#fff;margin-bottom:8px;}
+.rpc-key{font-size:.75em;color:#a8b2d8;}
+.rpc-key kbd{background:rgba(255,255,255,.15);border-radius:4px;padding:2px 7px;font-family:monospace;}
+.round-vs{font-size:1.6em;font-weight:900;color:rgba(255,255,255,.3);flex-shrink:0;}
+
+/* ===== SCOREBOARD MODAL ===== */
+#scoreboard-modal .modal{max-width:420px;}
+.sb-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;margin-bottom:6px;}
+.sb-rank{font-size:1.2em;width:30px;}
+.sb-team{flex:1;font-weight:600;font-size:.95em;}
+.sb-score{font-size:1.8em;font-weight:bold;}
 
 /* ===== TEMP MSG ===== */
 #temp-msg{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(10,10,30,.92);color:#fff;font-size:clamp(1em,3vw,1.4em);font-weight:bold;padding:18px 36px;border-radius:14px;z-index:200;text-align:center;pointer-events:none;border:2px solid rgba(233,69,96,.5);max-width:80vw;}
@@ -105,13 +147,13 @@ textarea#word-paste::placeholder{color:rgba(255,255,255,.3);}
 @keyframes endIn{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
 .end-trophy{font-size:clamp(3em,10vw,5em);margin-bottom:8px;}
 .end-winner{font-size:clamp(1.8em,5vw,3em);font-weight:bold;margin-bottom:8px;}
-.end-score-row{display:flex;justify-content:center;gap:50px;margin:20px 0;}
-.end-score-item{text-align:center;}
-.end-score-name{font-size:.85em;color:#a8b2d8;text-transform:uppercase;letter-spacing:1px;}
-.end-score-val{font-size:clamp(2em,7vw,3.5em);font-weight:bold;}
+.end-score-row{display:flex;justify-content:center;gap:30px;margin:16px 0;flex-wrap:wrap;}
+.end-score-item{text-align:center;padding:8px 16px;}
+.end-score-name{font-size:.82em;color:#a8b2d8;text-transform:uppercase;letter-spacing:1px;}
+.end-score-val{font-size:clamp(2em,7vw,3.2em);font-weight:bold;}
 
-/* ===== KEYBOARD HINT ===== */
-#kb-hint{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:5px 14px;border-radius:20px;font-size:.75em;color:#a8b2d8;pointer-events:none;z-index:10;}
+/* ===== KB HINT ===== */
+#kb-hint{position:fixed;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:5px 14px;border-radius:20px;font-size:.74em;color:#a8b2d8;pointer-events:none;z-index:10;}
 kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size:.9em;font-family:monospace;}
 </style>
 </head>
@@ -121,6 +163,8 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
 <div id="setup-screen">
   <div class="setup-title">🪰 Fly Swatter Vocab Game</div>
   <div class="setup-subtitle">Upload or paste your vocabulary words to begin</div>
+
+  <!-- Word input card -->
   <div class="setup-card">
     <div class="setup-section">
       <label class="setup-label">📂 Upload a text file (one word or phrase per line)</label>
@@ -137,11 +181,29 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
       <textarea id="word-paste" placeholder="Enter words separated by new lines, commas, or semicolons&#10;&#10;Example:&#10;photosynthesis&#10;mitochondria&#10;cell membrane&#10;nucleus"></textarea>
     </div>
     <div id="word-count-display"></div>
-    <div class="setup-footer">
-      <button class="btn btn-primary" id="next-btn" onclick="startGame()" disabled style="font-size:1.1em;padding:13px 40px;">
-        Next ▶
-      </button>
+  </div>
+
+  <!-- Team configuration card -->
+  <div class="setup-card" style="margin-top:12px;">
+    <label class="team-toggle-row">
+      <input type="checkbox" id="teams-enabled" onchange="toggleTeamSetup()">
+      <span class="setup-label" style="margin:0;cursor:pointer;">👥 Enable team &amp; student tracking (optional)</span>
+    </label>
+    <div id="team-config" style="display:none;margin-top:14px;">
+      <div class="team-count-row">
+        <label class="setup-label" style="margin:0;white-space:nowrap;">Number of teams:</label>
+        <input type="number" class="num-input" id="team-count" min="2" max="8" value="2" onchange="buildTeamInputs()">
+      </div>
+      <div id="team-inputs"></div>
     </div>
+  </div>
+
+  <!-- Start button -->
+  <div style="margin-top:16px;text-align:center;flex-shrink:0;">
+    <div id="word-count-display2" style="font-size:.8em;color:#a8b2d8;margin-bottom:10px;min-height:16px;"></div>
+    <button class="btn btn-primary" id="next-btn" onclick="startGame()" disabled style="font-size:1.1em;padding:13px 44px;">
+      Start Game ▶
+    </button>
   </div>
 </div>
 
@@ -149,36 +211,57 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
 <div id="game-screen">
   <div class="game-header">
     <div class="score-panel" id="p1-panel">
-      <div class="score-player-name p1-color">Player 1 <kbd style="font-size:.65em;background:rgba(52,152,219,.25);border-radius:3px;padding:1px 4px;">Tab</kbd></div>
+      <div class="score-player-name p1-color" id="p1-name">Player 1 <kbd style="font-size:.65em;background:rgba(52,152,219,.25);border-radius:3px;padding:1px 4px;">Tab</kbd></div>
+      <div class="score-student-label" id="p1-student"></div>
       <div class="score-value p1-color" id="score-p1">0</div>
     </div>
     <div class="game-controls">
       <div class="game-title">🪰 Fly Swatter</div>
       <div class="words-remaining" id="words-remaining"></div>
       <div class="game-buttons">
-        <button class="btn btn-secondary btn-sm" id="undo-btn" onclick="triggerUndo()">↩ Undo</button>
+        <button class="btn btn-secondary btn-sm" onclick="triggerUndo()">↩ Undo</button>
         <button class="btn btn-warning btn-sm" onclick="triggerRestart()">↺ Restart</button>
+        <button class="btn btn-secondary btn-sm" id="scores-btn" onclick="showScoreboard()" style="display:none;">📊 Scores</button>
         <button class="btn btn-danger btn-sm" onclick="triggerEndGame()">✖ End</button>
       </div>
     </div>
     <div class="score-panel" id="p2-panel">
-      <div class="score-player-name p2-color">Player 2 <kbd style="font-size:.65em;background:rgba(231,76,60,.25);border-radius:3px;padding:1px 4px;">Enter</kbd></div>
+      <div class="score-player-name p2-color" id="p2-name">Player 2 <kbd style="font-size:.65em;background:rgba(231,76,60,.25);border-radius:3px;padding:1px 4px;">Enter</kbd></div>
+      <div class="score-student-label" id="p2-student"></div>
       <div class="score-value p2-color" id="score-p2">0</div>
     </div>
   </div>
 
   <div id="word-grid-container">
     <div id="word-grid"></div>
-    <!-- countdown overlay -->
     <div id="countdown-overlay">
       <div class="countdown-player-label" id="cd-player"></div>
       <div class="countdown-msg" id="cd-msg">Get ready to select your word...</div>
       <div class="countdown-num" id="cd-num">3</div>
     </div>
-    <!-- selecting message -->
     <div id="selecting-msg"></div>
-    <!-- timer bar -->
     <div id="timer-bar-wrap"><div id="timer-bar"></div></div>
+  </div>
+</div>
+
+<!-- ==================== ROUND ANNOUNCEMENT MODAL ==================== -->
+<div class="modal-overlay" id="round-modal">
+  <div class="modal" style="text-align:center;">
+    <div class="round-badge">Round <span id="rm-num">1</span></div>
+    <div class="round-matchup">
+      <div class="round-player-card rpc-p1">
+        <div class="rpc-team" id="rm-t1-team">Team 1</div>
+        <div class="rpc-student" id="rm-t1-student">Student 1</div>
+        <div class="rpc-key">Press <kbd>Tab</kbd></div>
+      </div>
+      <div class="round-vs">VS</div>
+      <div class="round-player-card rpc-p2">
+        <div class="rpc-team" id="rm-t2-team">Team 2</div>
+        <div class="rpc-student" id="rm-t2-student">Student 1</div>
+        <div class="rpc-key">Press <kbd>Enter</kbd></div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-pulse" style="font-size:1.15em;padding:14px 52px;" onclick="continueFromRound()">▶ Continue</button>
   </div>
 </div>
 
@@ -187,8 +270,8 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
   <div class="modal">
     <div class="modal-title">Word Selected!</div>
     <div class="modal-word-display" id="cm-word"></div>
-    <div class="modal-q">Which player answered?</div>
-    <div class="player-row">
+    <div class="modal-q" id="cm-player-q">Which player answered?</div>
+    <div class="player-row" id="cm-player-row">
       <button class="player-pick-btn p1" id="cm-p1" onclick="cmSelectPlayer(1)">🔵 Player 1</button>
       <button class="player-pick-btn p2" id="cm-p2" onclick="cmSelectPlayer(2)">🔴 Player 2</button>
     </div>
@@ -232,6 +315,17 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
   </div>
 </div>
 
+<!-- ==================== SCOREBOARD MODAL ==================== -->
+<div class="modal-overlay" id="scoreboard-modal">
+  <div class="modal">
+    <div class="modal-title">📊 Team Scores</div>
+    <div id="sb-rows" style="margin:16px 0;"></div>
+    <div class="modal-row">
+      <button class="btn btn-secondary" onclick="document.getElementById('scoreboard-modal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== TEMP MESSAGE ==================== -->
 <div id="temp-msg"></div>
 
@@ -241,16 +335,7 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
   <div class="end-content">
     <div class="end-trophy" id="end-trophy">🏆</div>
     <div class="end-winner" id="end-winner"></div>
-    <div class="end-score-row">
-      <div class="end-score-item">
-        <div class="end-score-name p1-color">Player 1</div>
-        <div class="end-score-val p1-color" id="end-s1">0</div>
-      </div>
-      <div class="end-score-item">
-        <div class="end-score-name p2-color">Player 2</div>
-        <div class="end-score-val p2-color" id="end-s2">0</div>
-      </div>
-    </div>
+    <div class="end-score-row" id="end-score-row"></div>
     <button class="btn btn-primary" style="font-size:1.1em;padding:14px 40px;" onclick="playAgain()">🔄 Play Again</button>
   </div>
 </div>
@@ -265,17 +350,17 @@ kbd{background:rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-size
 const G = {
   allWords: [],
   active: [],
-  scores: [0, 0],
-  history: [],          // [{player,word}]
-  mode: 'setup',        // setup|idle|buzzin|selecting|confirm|endgame
+  scores: [0, 0],        // P1/P2 scores (or sum-by-team when useTeams)
+  history: [],           // [{player,word,teamIdx}]
+  mode: 'setup',
   buzzedPlayer: 0,
-  activeSelector: 0,    // who is currently selecting (keyboard mode)
-  wrongPlayer: 0,       // click mode: who answered wrong this round
-  isSecondChance: false,// keyboard mode: other player's turn
-  selWord: null,        // word chosen
-  cmPlayer: 0,          // selected player in click modal
-  cdTimer: null,        // countdown interval
-  selTimer: null,       // selection timeout
+  activeSelector: 0,
+  wrongPlayer: 0,
+  isSecondChance: false,
+  selWord: null,
+  cmPlayer: 0,
+  cdTimer: null,
+  selTimer: null,
   timerStart: 0,
   timerDur: 0,
   timerRAF: null,
@@ -284,7 +369,14 @@ const G = {
   fwParticles: [],
   fwFrame: 0,
   tempTimer: null,
+  // Team mode
+  useTeams: false,
+  teams: [],             // [{name,students:[],color}]
+  teamScores: [],        // score per team index
+  wordNum: 0,            // increments each resolved word
 };
+
+const TEAM_COLORS = ['#3498db','#e74c3c','#27ae60','#f39c12','#cc5de8','#20c997','#ff6b6b','#4d96ff'];
 
 // ============================================================
 // SETUP
@@ -304,26 +396,82 @@ document.getElementById('file-input').addEventListener('change', function(e){
 function updateWordCount(){
   const w = parseWords(document.getElementById('word-paste').value);
   const el = document.getElementById('word-count-display');
+  const el2 = document.getElementById('word-count-display2');
   const btn = document.getElementById('next-btn');
   if(w.length > 0){
-    el.textContent = `✓ ${w.length} word${w.length!==1?'s':''} found`;
-    el.style.color = '#6bcb77';
+    const txt = `✓ ${w.length} word${w.length!==1?'s':''} found`;
+    el.textContent = txt; el.style.color = '#6bcb77';
+    el2.textContent = txt; el2.style.color = '#6bcb77';
     btn.disabled = false;
   } else {
-    el.textContent = '';
+    el.textContent = ''; el2.textContent = '';
     btn.disabled = true;
   }
 }
 
 function parseWords(text){
-  return [...new Set(
-    text.split(/[\n,;|]+/).map(s=>s.trim()).filter(s=>s.length>0)
-  )];
+  return [...new Set(text.split(/[\n,;|]+/).map(s=>s.trim()).filter(s=>s.length>0))];
+}
+
+// ===== TEAM SETUP UI =====
+function toggleTeamSetup(){
+  const on = document.getElementById('teams-enabled').checked;
+  document.getElementById('team-config').style.display = on ? 'block' : 'none';
+  if(on) buildTeamInputs();
+}
+
+function buildTeamInputs(){
+  const n = Math.max(2, Math.min(8, parseInt(document.getElementById('team-count').value)||2));
+  document.getElementById('team-count').value = n;
+  const container = document.getElementById('team-inputs');
+  container.innerHTML = '';
+  for(let i=0;i<n;i++){
+    const color = TEAM_COLORS[i % TEAM_COLORS.length];
+    const div = document.createElement('div');
+    div.className = 'team-entry';
+    div.innerHTML = `
+      <div class="team-entry-header">
+        <div class="team-dot" style="background:${color};"></div>
+        <span class="team-entry-label">Team ${i+1}</span>
+      </div>
+      <div class="team-fields">
+        <div>
+          <div class="team-field-label">Team Name</div>
+          <input type="text" class="txt-input" id="t${i}-name" placeholder="Team ${i+1}" value="Team ${i+1}">
+        </div>
+        <div>
+          <div class="team-field-label">Students (number or names)</div>
+          <input type="text" class="txt-input" id="t${i}-students" placeholder='5  or  Alice, Bob, Charlie'>
+        </div>
+      </div>`;
+    container.appendChild(div);
+  }
+}
+
+function parseTeamConfig(){
+  const n = parseInt(document.getElementById('team-count').value)||2;
+  const teams = [];
+  for(let i=0;i<n;i++){
+    const name = (document.getElementById(`t${i}-name`)?.value.trim()) || `Team ${i+1}`;
+    const raw = (document.getElementById(`t${i}-students`)?.value.trim()) || '5';
+    let students;
+    // If it's a pure number, generate numbered students
+    if(/^\d+$/.test(raw)){
+      const cnt = Math.max(1, parseInt(raw));
+      students = Array.from({length:cnt},(_,j)=>`Student ${j+1}`);
+    } else {
+      students = raw.split(/[,\n]+/).map(s=>s.trim()).filter(s=>s.length>0);
+      if(!students.length) students = ['Student 1'];
+    }
+    teams.push({ name, students, color: TEAM_COLORS[i % TEAM_COLORS.length] });
+  }
+  return teams;
 }
 
 function startGame(){
   const words = parseWords(document.getElementById('word-paste').value);
   if(!words.length){ alert('Please enter at least one word!'); return; }
+
   G.allWords = words;
   G.active = [...words];
   G.scores = [0,0];
@@ -331,13 +479,110 @@ function startGame(){
   G.mode = 'idle';
   G.wrongPlayer = 0;
   G.selWord = null;
+  G.wordNum = 0;
+
+  G.useTeams = document.getElementById('teams-enabled').checked;
+  if(G.useTeams){
+    G.teams = parseTeamConfig();
+    G.teamScores = G.teams.map(()=>0);
+  } else {
+    G.teams = [];
+    G.teamScores = [];
+  }
+
   document.getElementById('setup-screen').style.display = 'none';
-  const gs = document.getElementById('game-screen');
-  gs.style.display = 'flex';
-  document.getElementById('kb-hint').style.display = 'block';
+  document.getElementById('game-screen').style.display = 'flex';
+  document.getElementById('kb-hint').style.display = G.useTeams ? 'none' : 'block';
+  document.getElementById('scores-btn').style.display = G.useTeams && G.teams.length > 2 ? 'inline-flex' : 'none';
+
   renderGrid();
-  refreshScores();
   refreshRemaining();
+
+  if(G.useTeams){
+    setTimeout(()=> showRoundAnnouncement(), 100);
+  } else {
+    refreshScores();
+  }
+}
+
+// ============================================================
+// TEAM / ROUND LOGIC
+// ============================================================
+function getMatchup(){
+  if(!G.useTeams || G.teams.length < 2) return null;
+  const N = G.teams.length;
+  const w = G.wordNum;
+  const t1i = w % N;
+  const t2i = (w + 1) % N;
+  const t1 = G.teams[t1i];
+  const t2 = G.teams[t2i];
+  return {
+    t1: { teamIdx: t1i, name: t1.name, color: t1.color,
+          student: t1.students[w % t1.students.length],
+          studentNum: (w % t1.students.length) + 1 },
+    t2: { teamIdx: t2i, name: t2.name, color: t2.color,
+          student: t2.students[w % t2.students.length],
+          studentNum: (w % t2.students.length) + 1 },
+  };
+}
+
+function showRoundAnnouncement(){
+  if(!G.useTeams) return;
+  const m = getMatchup();
+  if(!m) return;
+
+  G.mode = 'confirm'; // block keyboard/click until continued
+
+  const roundNum = G.wordNum + 1;
+  document.getElementById('rm-num').textContent = roundNum;
+  document.getElementById('rm-t1-team').textContent = m.t1.name;
+  document.getElementById('rm-t1-student').textContent = m.t1.student;
+  document.getElementById('rm-t2-team').textContent = m.t2.name;
+  document.getElementById('rm-t2-student').textContent = m.t2.student;
+
+  // Update header
+  updateHeaderForMatchup(m);
+
+  document.getElementById('round-modal').classList.add('open');
+}
+
+function updateHeaderForMatchup(m){
+  const p1n = document.getElementById('p1-name');
+  const p2n = document.getElementById('p2-name');
+  const p1s = document.getElementById('p1-student');
+  const p2s = document.getElementById('p2-student');
+  const sv1 = document.getElementById('score-p1');
+  const sv2 = document.getElementById('score-p2');
+
+  p1n.innerHTML = `<span style="color:${m.t1.color}">${m.t1.name}</span> <kbd style="font-size:.6em;background:rgba(255,255,255,.15);border-radius:3px;padding:1px 4px;">Tab</kbd>`;
+  p1n.style.color = '';
+  p1s.textContent = m.t1.student;
+  sv1.style.color = m.t1.color;
+  sv1.textContent = G.teamScores[m.t1.teamIdx];
+
+  p2n.innerHTML = `<span style="color:${m.t2.color}">${m.t2.name}</span> <kbd style="font-size:.6em;background:rgba(255,255,255,.15);border-radius:3px;padding:1px 4px;">Enter</kbd>`;
+  p2n.style.color = '';
+  p2s.textContent = m.t2.student;
+  sv2.style.color = m.t2.color;
+  sv2.textContent = G.teamScores[m.t2.teamIdx];
+
+  // Also update click modal player buttons
+  document.getElementById('cm-p1').textContent = `${m.t1.name.length > 10 ? m.t1.name.slice(0,10)+'…' : m.t1.name}\n${m.t1.student}`;
+  document.getElementById('cm-p2').textContent = `${m.t2.name.length > 10 ? m.t2.name.slice(0,10)+'…' : m.t2.name}\n${m.t2.student}`;
+}
+
+function continueFromRound(){
+  document.getElementById('round-modal').classList.remove('open');
+  G.mode = 'idle';
+}
+
+function wordCompleted(){
+  // Advance to next student matchup
+  G.wordNum++;
+  G.wrongPlayer = 0;
+  if(G.useTeams && G.active.length > 0){
+    setTimeout(()=> showRoundAnnouncement(), 400);
+  }
 }
 
 // ============================================================
@@ -366,16 +611,13 @@ function sizeGrid(){
   const W = cont.clientWidth - 20;
   const H = cont.clientHeight - 20;
 
-  // Find optimal column count — favor cells wider than tall (ideal for text)
-  // Penalise heavily when cells end up taller than wide (aspect < 1)
   let bestCols = Math.ceil(Math.sqrt(n)), bestScore = -Infinity;
   for(let cols = 1; cols <= n; cols++){
     const rows = Math.ceil(n/cols);
     const cw = (W - (cols-1)*8) / cols;
     const ch = (H - (rows-1)*8) / rows;
     if(cw <= 0 || ch <= 0) continue;
-    const aspect = cw / ch; // > 1 = wider than tall (good for text)
-    // Penalise cells taller than wide much more than cells wider than tall
+    const aspect = cw / ch;
     const penalty = aspect >= 1 ? 1 + Math.max(0, aspect - 4) * 0.5
                                 : 1 + (1/aspect - 1) * 4;
     const score = (cw * ch) / penalty;
@@ -400,8 +642,13 @@ function sizeGrid(){
 }
 
 function refreshScores(){
-  document.getElementById('score-p1').textContent = G.scores[0];
-  document.getElementById('score-p2').textContent = G.scores[1];
+  if(G.useTeams){
+    const m = getMatchup();
+    if(m) updateHeaderForMatchup(m);
+  } else {
+    document.getElementById('score-p1').textContent = G.scores[0];
+    document.getElementById('score-p2').textContent = G.scores[1];
+  }
 }
 
 function refreshRemaining(){
@@ -434,16 +681,35 @@ function openClickModal(word){
   G.cmPlayer = 0;
   document.getElementById('cm-word').textContent = word;
   document.getElementById('cm-err').textContent = '';
+
   const p1b = document.getElementById('cm-p1');
   const p2b = document.getElementById('cm-p2');
   p1b.classList.remove('sel'); p2b.classList.remove('sel');
-  // If wrongPlayer set, disable that player's button
-  p1b.disabled = G.wrongPlayer === 1;
-  p2b.disabled = G.wrongPlayer === 2;
+
+  const pRow = document.getElementById('cm-player-row');
+  const pQ = document.getElementById('cm-player-q');
+
+  if(G.wrongPlayer !== 0){
+    // One player already got it wrong — auto-select the other
+    const autoPlayer = G.wrongPlayer === 1 ? 2 : 1;
+    p1b.disabled = G.wrongPlayer === 1;
+    p2b.disabled = G.wrongPlayer === 2;
+    pQ.textContent = `Only Player ${autoPlayer} can answer now:`;
+    // Auto-select
+    G.cmPlayer = autoPlayer;
+    p1b.classList.toggle('sel', autoPlayer === 1);
+    p2b.classList.toggle('sel', autoPlayer === 2);
+  } else {
+    p1b.disabled = false;
+    p2b.disabled = false;
+    pQ.textContent = G.useTeams ? 'Which player answered?' : 'Which player answered?';
+  }
+
   document.getElementById('click-modal').classList.add('open');
 }
 
 function cmSelectPlayer(p){
+  if(G.wrongPlayer !== 0 && p === G.wrongPlayer) return; // blocked
   G.cmPlayer = p;
   document.getElementById('cm-p1').classList.toggle('sel', p===1);
   document.getElementById('cm-p2').classList.toggle('sel', p===2);
@@ -459,20 +725,21 @@ function cmConfirm(correct){
 
   if(correct){
     awardPoint(G.cmPlayer);
-    G.wrongPlayer = 0;
-    G.mode = 'idle';
+    // wordCompleted called inside awardPoint
   } else {
     const loser = G.cmPlayer;
     if(G.wrongPlayer === 0){
       G.wrongPlayer = loser;
       G.mode = 'idle';
       const other = loser === 1 ? 2 : 1;
-      showTemp(`Player ${loser} was wrong! Player ${other} can now pick.`);
+      const otherLabel = G.useTeams ? getMatchup()?.['t'+(other)+'']?.name || `Player ${other}` : `Player ${other}`;
+      const loserLabel = G.useTeams ? getMatchup()?.['t'+(loser)+'']?.name || `Player ${loser}` : `Player ${loser}`;
+      showTemp(`${loserLabel} was wrong! ${otherLabel} can now pick.`);
     } else {
-      // Both players wrong — reset
-      G.wrongPlayer = 0;
+      // Both wrong
       G.mode = 'idle';
       showTemp('Both players were wrong!');
+      wordCompleted();
     }
   }
 }
@@ -488,7 +755,12 @@ function cmCancel(){
 // ============================================================
 function openKbModal(word, player){
   G.mode = 'confirm';
-  document.getElementById('km-title').textContent = `Player ${player}'s Answer`;
+  let title = `Player ${player}'s Answer`;
+  if(G.useTeams){
+    const m = getMatchup();
+    title = m ? `${m['t'+player].name} — ${m['t'+player].student}'s Answer` : title;
+  }
+  document.getElementById('km-title').textContent = title;
   document.getElementById('km-word').textContent = word;
   document.getElementById('kb-modal').classList.add('open');
 }
@@ -500,18 +772,20 @@ function kmConfirm(correct){
   if(correct){
     awardPoint(player);
     resetKbRound();
-    G.mode = 'idle';
+    // wordCompleted called inside awardPoint
   } else {
     if(!G.isSecondChance){
       G.isSecondChance = true;
       const other = player === 1 ? 2 : 1;
       G.mode = 'idle';
-      showTemp(`Player ${player} was wrong! Player ${other} — your turn!`);
+      const label = G.useTeams ? getMatchup()?.['t'+other]?.name || `Player ${other}` : `Player ${other}`;
+      showTemp(`Wrong! ${label} — your turn!`);
       setTimeout(()=> launchSelectPhase(other), 1400);
     } else {
       showTemp('Both players were wrong! Moving on...');
       resetKbRound();
       G.mode = 'idle';
+      wordCompleted();
     }
   }
 }
@@ -536,40 +810,60 @@ function resetKbRound(){
 // AWARD POINT / UNDO
 // ============================================================
 function awardPoint(player){
-  G.scores[player-1]++;
-  G.history.push({player, word: G.selWord});
+  let teamIdx = -1;
+  if(G.useTeams){
+    const m = getMatchup();
+    if(m){
+      teamIdx = player === 1 ? m.t1.teamIdx : m.t2.teamIdx;
+      G.teamScores[teamIdx]++;
+    }
+  } else {
+    G.scores[player-1]++;
+  }
+  G.history.push({ player, word: G.selWord, teamIdx });
+
   const idx = G.active.indexOf(G.selWord);
   if(idx !== -1) G.active.splice(idx,1);
+
   refreshScores();
   refreshRemaining();
-  // Flash score panel
+
   const panel = document.getElementById(player===1?'p1-panel':'p2-panel');
   panel.classList.add('active-turn');
   setTimeout(()=> panel.classList.remove('active-turn'), 800);
+
   if(G.active.length === 0){ setTimeout(endGame, 600); return; }
   renderGrid();
+  wordCompleted();
 }
 
 function doUndo(){
   if(!G.history.length) return;
   const last = G.history.pop();
-  G.scores[last.player-1]--;
+  if(G.useTeams && last.teamIdx >= 0){
+    G.teamScores[last.teamIdx]--;
+  } else {
+    G.scores[last.player-1]--;
+  }
   G.active.push(last.word);
+  if(G.useTeams && G.wordNum > 0){
+    G.wordNum--;
+    // Close round modal if open
+    document.getElementById('round-modal').classList.remove('open');
+    G.mode = 'idle';
+  }
   refreshScores();
   refreshRemaining();
   renderGrid();
-  showTemp(`Undid point for Player ${last.player} (${last.word})`);
+  const label = G.useTeams && last.teamIdx >= 0 ? G.teams[last.teamIdx].name : `Player ${last.player}`;
+  showTemp(`Undid point for ${label} (${last.word})`);
 }
 
 // ============================================================
 // KEYBOARD INPUT
 // ============================================================
 document.addEventListener('keydown', e=>{
-  // Always prevent Tab from focusing other elements during game
-  if(G.mode !== 'setup' && G.mode !== 'endgame' && e.key === 'Tab'){
-    e.preventDefault();
-  }
-  // Only buzz in from idle mode
+  if(G.mode !== 'setup' && G.mode !== 'endgame' && e.key === 'Tab') e.preventDefault();
   if(G.mode !== 'idle') return;
   const player = e.key === 'Tab' ? 1 : e.key === 'Enter' ? 2 : 0;
   if(!player) return;
@@ -581,9 +875,16 @@ function buzzIn(player){
   G.buzzedPlayer = player;
   G.isSecondChance = false;
   G.mode = 'buzzin';
-  // Hide words
   document.getElementById('word-grid').style.visibility = 'hidden';
-  startCountdown(player, 3, ()=>{
+
+  let playerLabel = `Player ${player} (${player===1?'Tab':'Enter'})`;
+  if(G.useTeams){
+    const m = getMatchup();
+    if(m) playerLabel = `${m['t'+player].name} — ${m['t'+player].student}`;
+  }
+  document.getElementById('cd-player').textContent = playerLabel + ' buzzed in!';
+
+  startCountdown(3, ()=>{
     document.getElementById('word-grid').style.visibility = 'visible';
     launchSelectPhase(player);
   });
@@ -592,15 +893,12 @@ function buzzIn(player){
 // ============================================================
 // COUNTDOWN
 // ============================================================
-function startCountdown(player, secs, cb){
+function startCountdown(secs, cb){
   const ov = document.getElementById('countdown-overlay');
   ov.style.display = 'flex';
-  document.getElementById('cd-player').textContent =
-    `Player ${player} (${player===1?'Tab':'Enter'}) buzzed in!`;
   document.getElementById('cd-msg').textContent = 'Get ready to select your word...';
   let rem = secs;
   document.getElementById('cd-num').textContent = rem;
-
   G.cdTimer = setInterval(()=>{
     rem--;
     if(rem <= 0){
@@ -619,8 +917,15 @@ function startCountdown(player, secs, cb){
 function launchSelectPhase(player){
   G.mode = 'selecting';
   G.activeSelector = player;
+
+  let label = `Player ${player}`;
+  if(G.useTeams){
+    const m = getMatchup();
+    if(m) label = `${m['t'+player].name} — ${m['t'+player].student}`;
+  }
+
   const msg = document.getElementById('selecting-msg');
-  msg.textContent = `⚡ Player ${player} — Select your word!`;
+  msg.textContent = `⚡ ${label} — Select your word!`;
   msg.style.display = 'block';
   startTimerBar(4000);
 
@@ -631,11 +936,14 @@ function launchSelectPhase(player){
     if(!G.isSecondChance){
       const other = player===1?2:1;
       G.isSecondChance = true;
-      showTemp(`Player ${player} timed out! Player ${other} — your turn!`);
+      let otherLabel = `Player ${other}`;
+      if(G.useTeams){ const m=getMatchup(); if(m) otherLabel=`${m['t'+other].name} — ${m['t'+other].student}`; }
+      showTemp(`${label} timed out! ${otherLabel} — your turn!`);
       setTimeout(()=> launchSelectPhase(other), 1400);
     } else {
       showTemp("Time's up for both players!");
       resetKbRound();
+      wordCompleted();
     }
   }, 4000);
 }
@@ -667,7 +975,7 @@ function stopTimerBar(){
 // ============================================================
 // TEMP MESSAGE
 // ============================================================
-function showTemp(msg, dur=1600){
+function showTemp(msg, dur=1700){
   const el = document.getElementById('temp-msg');
   el.textContent = msg;
   el.style.display = 'block';
@@ -682,38 +990,50 @@ function triggerUndo(){
   if(G.mode !== 'idle') return;
   if(!G.history.length){ showTemp('Nothing to undo!'); return; }
   const last = G.history[G.history.length-1];
-  openGenericModal(
-    '↩ Undo Last Point',
-    `Remove point from Player ${last.player} for "${last.word}"?`,
-    doUndo
-  );
+  const label = G.useTeams && last.teamIdx >= 0 ? G.teams[last.teamIdx].name : `Player ${last.player}`;
+  openGenericModal('↩ Undo Last Point', `Remove point from ${label} for "${last.word}"?`, doUndo);
 }
 
 function triggerRestart(){
   if(G.mode !== 'idle') return;
-  openGenericModal(
-    '↺ Restart Game',
-    'Reset all scores and start over with the same words?',
-    ()=>{
-      G.active = [...G.allWords];
-      G.scores = [0,0];
-      G.history = [];
-      G.wrongPlayer = 0;
-      G.mode = 'idle';
-      renderGrid();
+  openGenericModal('↺ Restart Game', 'Reset all scores and start over with the same words?', ()=>{
+    G.active = [...G.allWords];
+    G.scores = [0,0];
+    G.teamScores = G.teams.map(()=>0);
+    G.history = [];
+    G.wordNum = 0;
+    G.wrongPlayer = 0;
+    G.mode = 'idle';
+    renderGrid();
+    refreshRemaining();
+    if(G.useTeams){
+      setTimeout(()=> showRoundAnnouncement(), 200);
+    } else {
       refreshScores();
-      refreshRemaining();
       showTemp('Game restarted!');
     }
-  );
+  });
 }
 
 function triggerEndGame(){
-  openGenericModal(
-    '✖ End Game',
-    'Are you sure you want to end the game now?',
-    endGame
-  );
+  openGenericModal('✖ End Game', 'Are you sure you want to end the game now?', endGame);
+}
+
+// ============================================================
+// SCOREBOARD
+// ============================================================
+function showScoreboard(){
+  if(!G.useTeams) return;
+  const rows = document.getElementById('sb-rows');
+  const sorted = G.teams.map((t,i)=>({name:t.name,color:t.color,score:G.teamScores[i]}))
+    .sort((a,b)=>b.score-a.score);
+  rows.innerHTML = sorted.map((t,i)=>`
+    <div class="sb-row" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+      <div class="sb-rank">${['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣'][i]||i+1}</div>
+      <div class="sb-team" style="color:${t.color}">${t.name}</div>
+      <div class="sb-score" style="color:${t.color}">${t.score}</div>
+    </div>`).join('');
+  document.getElementById('scoreboard-modal').classList.add('open');
 }
 
 // ============================================================
@@ -739,29 +1059,57 @@ function gmCancel(){
 // ============================================================
 function endGame(){
   G.mode = 'endgame';
-  // Clean up any active timers
   if(G.cdTimer){ clearInterval(G.cdTimer); G.cdTimer=null; }
   clearTimeout(G.selTimer); G.selTimer=null;
   stopTimerBar();
   document.getElementById('countdown-overlay').style.display = 'none';
   document.getElementById('selecting-msg').style.display = 'none';
   document.getElementById('kb-hint').style.display = 'none';
+  document.getElementById('round-modal').classList.remove('open');
 
-  const [s1,s2] = G.scores;
   let winText, winColor, trophy;
-  if(s1 > s2){ winText=`🎉 Player 1 Wins!`; winColor='#3498db'; trophy='🏆'; }
-  else if(s2 > s1){ winText=`🎉 Player 2 Wins!`; winColor='#e74c3c'; trophy='🏆'; }
-  else { winText="🤝 It's a Tie!"; winColor='#f39c12'; trophy='🎖'; }
+
+  if(G.useTeams && G.teams.length){
+    const best = Math.max(...G.teamScores);
+    const winners = G.teams.filter((_,i)=>G.teamScores[i]===best);
+    if(winners.length === 1){
+      winText = `🎉 ${winners[0].name} Wins!`;
+      winColor = winners[0].color;
+      trophy = '🏆';
+    } else {
+      winText = "🤝 It's a Tie!";
+      winColor = '#f39c12';
+      trophy = '🎖';
+    }
+    // Build score items for all teams, sorted desc
+    const sorted = G.teams.map((t,i)=>({name:t.name,color:t.color,score:G.teamScores[i]}))
+      .sort((a,b)=>b.score-a.score);
+    document.getElementById('end-score-row').innerHTML = sorted.map(t=>`
+      <div class="end-score-item">
+        <div class="end-score-name" style="color:${t.color}">${t.name}</div>
+        <div class="end-score-val" style="color:${t.color}">${t.score}</div>
+      </div>`).join('');
+  } else {
+    const [s1,s2] = G.scores;
+    if(s1 > s2){ winText='🎉 Player 1 Wins!'; winColor='#3498db'; trophy='🏆'; }
+    else if(s2 > s1){ winText='🎉 Player 2 Wins!'; winColor='#e74c3c'; trophy='🏆'; }
+    else { winText="🤝 It's a Tie!"; winColor='#f39c12'; trophy='🎖'; }
+    document.getElementById('end-score-row').innerHTML = `
+      <div class="end-score-item">
+        <div class="end-score-name" style="color:#3498db">Player 1</div>
+        <div class="end-score-val" style="color:#3498db">${s1}</div>
+      </div>
+      <div class="end-score-item">
+        <div class="end-score-name" style="color:#e74c3c">Player 2</div>
+        <div class="end-score-val" style="color:#e74c3c">${s2}</div>
+      </div>`;
+  }
 
   document.getElementById('end-trophy').textContent = trophy;
   document.getElementById('end-winner').textContent = winText;
   document.getElementById('end-winner').style.color = winColor;
-  document.getElementById('end-s1').textContent = s1;
-  document.getElementById('end-s2').textContent = s2;
-
   document.getElementById('game-screen').style.display = 'none';
-  const es = document.getElementById('end-screen');
-  es.style.display = 'flex';
+  document.getElementById('end-screen').style.display = 'flex';
   initFireworks();
 }
 
@@ -772,7 +1120,15 @@ function playAgain(){
   document.getElementById('word-paste').value = '';
   document.getElementById('file-name').textContent = '';
   document.getElementById('word-count-display').textContent = '';
+  document.getElementById('word-count-display2').textContent = '';
   document.getElementById('next-btn').disabled = true;
+  // Reset header
+  document.getElementById('p1-name').innerHTML = 'Player 1 <kbd style="font-size:.65em;background:rgba(52,152,219,.25);border-radius:3px;padding:1px 4px;">Tab</kbd>';
+  document.getElementById('p2-name').innerHTML = 'Player 2 <kbd style="font-size:.65em;background:rgba(231,76,60,.25);border-radius:3px;padding:1px 4px;">Enter</kbd>';
+  document.getElementById('p1-student').textContent = '';
+  document.getElementById('p2-student').textContent = '';
+  document.getElementById('score-p1').style.color = '';
+  document.getElementById('score-p2').style.color = '';
   G.mode = 'setup';
 }
 
@@ -785,13 +1141,9 @@ function initFireworks(){
   cv.height = window.innerHeight;
   G.fwParticles = [];
   G.fwFrame = 0;
-  // Initial burst
   for(let i=0;i<6;i++){
     setTimeout(()=>{
-      fwExplode(cv,
-        cv.width*0.1 + Math.random()*cv.width*0.8,
-        cv.height*0.05 + Math.random()*cv.height*0.55
-      );
+      fwExplode(cv, cv.width*0.1+Math.random()*cv.width*0.8, cv.height*0.05+Math.random()*cv.height*0.55);
     }, i*250);
   }
   G.fwRAF = requestAnimationFrame(fwDraw);
@@ -806,29 +1158,17 @@ function stopFireworks(){
 
 function fwExplode(cv,x,y){
   const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b','#cc5de8','#20c997','#f06595','#74c0fc','#ffe066'];
-  const col = colors[Math.floor(Math.random()*colors.length)];
-  const col2 = colors[Math.floor(Math.random()*colors.length)];
+  const col=colors[Math.floor(Math.random()*colors.length)];
+  const col2=colors[Math.floor(Math.random()*colors.length)];
   for(let i=0;i<90;i++){
-    const angle=(i/90)*Math.PI*2 + (Math.random()-0.5)*0.4;
+    const angle=(i/90)*Math.PI*2+(Math.random()-.5)*.4;
     const spd=Math.random()*8+2;
-    G.fwParticles.push({
-      x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,
-      alpha:1,decay:Math.random()*0.016+0.009,
-      sz:Math.random()*3.5+1.5,
-      color:Math.random()<0.5?col:col2
-    });
+    G.fwParticles.push({x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,alpha:1,decay:Math.random()*.016+.009,sz:Math.random()*3.5+1.5,color:Math.random()<.5?col:col2});
   }
-  // Sparks
   for(let i=0;i<25;i++){
     const angle=Math.random()*Math.PI*2;
     const spd=Math.random()*14+4;
-    G.fwParticles.push({
-      x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,
-      alpha:1,decay:Math.random()*0.025+0.015,
-      sz:Math.random()*5+2,
-      color:colors[Math.floor(Math.random()*colors.length)],
-      spark:true
-    });
+    G.fwParticles.push({x,y,vx:Math.cos(angle)*spd,vy:Math.sin(angle)*spd,alpha:1,decay:Math.random()*.025+.015,sz:Math.random()*5+2,color:colors[Math.floor(Math.random()*colors.length)],spark:true});
   }
 }
 
@@ -838,27 +1178,15 @@ function fwDraw(){
   ctx.fillStyle='rgba(26,26,46,0.17)';
   ctx.fillRect(0,0,cv.width,cv.height);
   G.fwFrame++;
-  if(G.fwFrame % 48 === 0){
-    fwExplode(cv,
-      cv.width*0.1+Math.random()*cv.width*0.8,
-      cv.height*0.05+Math.random()*cv.height*0.55
-    );
-  }
+  if(G.fwFrame%48===0) fwExplode(cv,cv.width*.1+Math.random()*cv.width*.8,cv.height*.05+Math.random()*cv.height*.55);
   for(let i=G.fwParticles.length-1;i>=0;i--){
     const p=G.fwParticles[i];
-    p.x+=p.vx; p.y+=p.vy;
-    p.vy+=0.13; p.vx*=0.985;
-    p.alpha-=p.decay;
+    p.x+=p.vx; p.y+=p.vy; p.vy+=.13; p.vx*=.985; p.alpha-=p.decay;
     if(p.alpha<=0){ G.fwParticles.splice(i,1); continue; }
-    ctx.save();
-    ctx.globalAlpha=p.alpha;
-    if(p.spark){
-      ctx.shadowColor=p.color; ctx.shadowBlur=8;
-    }
+    ctx.save(); ctx.globalAlpha=p.alpha;
+    if(p.spark){ ctx.shadowColor=p.color; ctx.shadowBlur=8; }
     ctx.fillStyle=p.color;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.sz,0,Math.PI*2); ctx.fill();
     ctx.restore();
   }
   G.fwRAF=requestAnimationFrame(fwDraw);
@@ -869,10 +1197,7 @@ function fwDraw(){
 // ============================================================
 window.addEventListener('resize',()=>{
   if(G.mode!=='setup'&&G.mode!=='endgame') sizeGrid();
-  if(G.mode==='endgame'){
-    const cv=document.getElementById('fireworks-canvas');
-    cv.width=window.innerWidth; cv.height=window.innerHeight;
-  }
+  if(G.mode==='endgame'){ const cv=document.getElementById('fireworks-canvas'); cv.width=window.innerWidth; cv.height=window.innerHeight; }
 });
 </script>
 </body>
